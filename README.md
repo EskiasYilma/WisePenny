@@ -2,7 +2,7 @@
 # WisePenny: (Health Information System)
 ![Latest commit](https://img.shields.io/github/last-commit/EskiasYilma/WisePenny?style=round-square)
 
-![logo](https://github.com/EskiasYilma/WisePenny/blob/main/product/static/wisepenny/logo_x.png)
+![logo](https://github.com/EskiasYilma/WisePenny/blob/main/product/static/wisepenny/discount_2.png)
 
 A light-weight but Robust Django web application designed to facilitate price comparison for a wide range of electronics products available in Ethiopia.
 
