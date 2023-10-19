@@ -1,3 +1,6 @@
+"""
+Defines url patterns for views
+"""
 from django.urls import path, re_path
 from . import views
 

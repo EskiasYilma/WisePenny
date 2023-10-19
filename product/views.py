@@ -16,13 +16,25 @@ from termcolor import colored
 
 
 def about(request):
+    """
+    About view
+    """
     return render(request, "product/about.html")
 def terms(request):
+    """
+    Terms and Conditions view
+    """
     return render(request, "product/terms.html")
 def privacy(request):
+    """
+    Privacy view
+    """
     return render(request, "product/privacy.html")    
 
 def contact(response):
+    """
+    Contact us View
+    """
     if response.method == 'POST':
         form = ContactForm(response.POST)
         if form.is_valid():
@@ -45,6 +57,9 @@ def contact(response):
     return render(response, "product/contact.html", {'form': form})
 
 def home(request):
+    """
+    Front Page View
+    """
     vm = Visitor_Manager()
     vm.save_visit(request)
     ttl_visitors = vm.visit_reports()
@@ -60,17 +75,13 @@ def home(request):
     if request.user.is_authenticated:
         user_searches = ProductTracker.objects.select_related('user').filter(user=request.user)
 
-
     if request.method == "POST":
         search_form = SearchForm(request.POST, auto_id=True)
         sub_form = SubscribeForm(request.POST, auto_id=True)
         if 'search' in request.POST and search_form.is_valid():
             search_term = search_form.cleaned_data["search_term"]
-
             print(colored(summary_data, "green"))
-            # store in SearchQuery
             SearchQuery_Manager(search_term).save_search(request)
-
             if search_term:
                 summary_data, results_1 = utils.get_summary_data(search_term)
                 if request.user.is_authenticated:
@@ -94,7 +105,6 @@ def home(request):
                 messages.success(
                     request, "You are already a subscriber! Kuddos!")
             return redirect(home)
-
     else:
         search_form = SearchForm()
         sub_form = SubscribeForm()
@@ -115,6 +125,9 @@ def home(request):
 # Management commands routes
 @user_passes_test(lambda u: u.is_superuser)
 def add_scraped_data(request):
+    """
+    Add scraped data to the database
+    """
     call_command('add_mekina_data')
     call_command('add_jiji_data')
     return HttpResponse("Custom management commands executed.")
@@ -128,7 +141,6 @@ def dashboard(request):
     """
     utils.Visitor_Manager().save_visit(request)
     ttl_visitors = utils.Visitor_Manager().visit_reports()
-    # search_reports = utils.SearchQuery_Manager().search_reports()
     summary_data = None
     all_data = utils.get_summary_data("")
     search_term = None
@@ -138,24 +150,17 @@ def dashboard(request):
         search_form = SearchForm(request.POST, auto_id=True)
         if 'search' in request.POST and search_form.is_valid():
             search_term = search_form.cleaned_data["search_term"]
-
-            print(colored(summary_data, "green"))
-            # store in SearchQuery
             SearchQuery_Manager(search_term).save_search(request)
-            # print(search_term)
             if search_term:
                 summary_data, results_1 = utils.get_summary_data(search_term)
                 try:
                     pt, created = ProductTracker.objects.get_or_create(user=request.user, name=search_term)
-                    # pt.save()
                 except IntegrityError:
                     pass
-
         else:
             messages.success(
                 request, "Please Login or Create a Free Account to Shorten Links.")
             return redirect(home)
-
     else:
         search_form = SearchForm()
     user_searches = ProductTracker.objects.select_related('user').filter(user=request.user)
@@ -164,7 +169,6 @@ def dashboard(request):
     return render(request, "product/dashboard.html", {
         "form":search_form,
         "results_1":results_1,
-        # "recent_searches":search_reports,
         "ttl_visitors":ttl_visitors,
         "summary_data":summary_data,
         "all_data":all_data,
@@ -174,15 +178,24 @@ def dashboard(request):
 
 @ login_required(login_url='/login/')
 def my_products(request):
+    """
+    My products View that shows tracked products
+    """
     products = ProductTracker.objects.filter(user=request.user)
     return render(request, "product/my_products.html", {'products':products})
 
 @ login_required(login_url='/login/')
 def my_history(request):
+    """
+    My History View that shows tracked products
+    """
     return render(request, "product/my_history.html")
 
 @ login_required(login_url='/login/')
 def track_product(request, user_id, product_id):
+    """
+    Adds a product to be tracked
+    """
     try:
         to_add = ProductTracker.objects.get(id=product_id)
         to_add.tracked = True
@@ -195,6 +208,9 @@ def track_product(request, user_id, product_id):
 
 @ login_required(login_url='/login/')
 def untrack_product(request, user_id, product_id):
+    """
+    Removes a product from tracked products
+    """
     try:
         to_add = ProductTracker.objects.get(id=product_id)
         to_add.tracked = False
@@ -206,6 +222,9 @@ def untrack_product(request, user_id, product_id):
 
 @ login_required(login_url='/login/')
 def delete_product(request, user_id, product_id):
+    """
+    Deletes a tracked product
+    """
     try:
         to_add = ProductTracker.objects.get(id=product_id)
         to_add.delete()
@@ -216,5 +235,8 @@ def delete_product(request, user_id, product_id):
 
 @ login_required(login_url='/login/')
 def user_search(request, user_id, product_id):
+    """
+    Stores searches made by a registered user
+    """
     products = ProductTracker.objects.get(id=product_id)
     return render(request, "product/search_results.html", {'products':products})

@@ -2,15 +2,25 @@ from django import forms
 
 
 class SearchForm(forms.Form):
+    """
+    Search Form
+    """
     search_term = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "search_main col-xs-10", 'placeholder': "iPhone 14, Epson Printer, LG tv...", 'id':"searchBar", 'type': "text", 'aria-label': "Search for a Product here", 'aria-describedby': "basic-addon2", "font-size": "10px"}), required=True)
-class UrlShortnerForm(forms.Form):
-    url_text = forms.URLField(widget=forms.TextInput(
-        attrs={'class': "form-control", 'placeholder': "Paste Long URL Here (https://...)", 'type': "url", 'aria-label': "Paste Long URL Here", 'aria-describedby': "basic-addon2", "font-size": "10px"}), required=True)
+        attrs={'class': "search_main col-xs-10", 'placeholder': "iPhone 14, Printer, Smart watch, ...", 'id':"searchBar", 'type': "text", 'aria-label': "Search for a Product here", 'aria-describedby': "basic-addon2", "font-size": "10px"}), required=True)
+
+
 class SubscribeForm(forms.Form):
+    """
+    Subscription Form
+    """
     sub_form = forms.EmailField(widget=forms.TextInput(
         attrs={'class': "form-control", 'placeholder': "Email Address...", 'type': "email", 'aria-label': "Email Address ...", 'aria-describedby': "basic-addon2", "font-size": "10px"}), required=True)
+
+
 class ContactForm(forms.Form):
+    """
+    Contact us Form
+    """
     full_name = forms.CharField(widget=forms.TextInput(
         attrs={'class': "form-control", 'placeholder': "Name", 'type': "text", 'aria-label': "full_name", 'aria-describedby': "basic-addon2", "font-size": "12px"}), required=True)
     email = forms.EmailField(widget=forms.TextInput(

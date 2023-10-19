@@ -15,18 +15,26 @@ class Category(models.Model):
 
 
 class SearchQuery(models.Model):
+    """
+    Stores Search Terms from all users (registered and anonymouse)
+    """
     search_term = models.CharField(max_length=255)
     date_searched = models.DateTimeField(auto_now_add=True)
     counter = models.IntegerField(default=0)
 
 class PriceHistory(models.Model):
+    """
+    Stores Price History of the product
+    """
     id = models.AutoField(primary_key=True)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class PriceSource(models.Model):
-    # classifieds or ecommerce site the product was listed
+    """
+    Stores Price Source of the product
+    """
     source_phone = models.CharField(max_length=255)
     source_site = models.CharField(max_length=255)
     product_count = models.IntegerField(default=0)
@@ -46,6 +54,9 @@ class PriceSource(models.Model):
         super(PriceSource, self).save(*args, **kwargs)
 
 class Product(models.Model):
+    """
+    Stores the product
+    """
     id = models.AutoField(primary_key=True, unique=True,)
     name = models.CharField(max_length=255)
     location = models.TextField(blank=True, null=True)
@@ -69,12 +80,6 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         # Check if the product is being created (not yet saved to the database)
         is_new_product = self._state.adding
-        # if not is_new_product:
-        #     # Check if the price has changed since the last save
-        #     last_saved_product = Product.objects.get(pk=self.pk)
-        #     if last_saved_product.price_value != self.price_value:
-        #         # Price has changed, create a PriceHistory record
-        #         PriceHistory.objects.create(id=self.id, product=self, price=self.price_value)
         # Calculate the fingerprint using MD5 hash of key attributes
         fingerprint_data = f"{self.id}{self.name}{self.product_url}{self.category}{self.price_value}{self.price_source}{self.thumbnail_url}"
         self.fingerprint = hashlib.md5(fingerprint_data.encode('utf-8')).hexdigest()
@@ -87,11 +92,17 @@ class Product(models.Model):
 
 
 class Visitors(models.Model):
+    """
+    Stores Website Visitors
+    """
     visitor_ip = models.TextField(max_length=20, unique=True)
     visit_count = models.IntegerField(default=0)
 
 
 class ProductTracker(models.Model):
+    """
+    Stores Products set to be tracked by a registerd user
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_products", null=True)
     id = models.AutoField(primary_key=True)
@@ -116,6 +127,9 @@ class ProductTracker(models.Model):
             return None
 
 class Subscribers(models.Model):
+    """
+    Stores Subscribers
+    """
     sub_email = models.EmailField(unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

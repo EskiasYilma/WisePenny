@@ -8,30 +8,11 @@ from django.db.models.functions import Coalesce
 from django.db import models
 from termcolor import colored
 
-# def get_b2c():
-#     queryset = Products.objects.select_related('name', 'price_value', 'price_source', 'date_added').order_by('-date_added')
-#     data = [model.__dict__ for model in queryset]
-#     df = pd.DataFrame(data)
-#     print(df.head())
-# # get_b2c()
-
-
-# def get_cheapest(search_term):
-#     cheapest_x_products = Product.objects.filter(name="{}".format(search_term)).order_by("price_value")
-#     data = {
-#         "name": [product.name for product in cheapest_x_products],
-#         "price_value": [product.price_value for product in cheapest_x_products],
-#     }
-
-#     df = pd.DataFrame(data)
-
-
-# class B2c_manager():
-#     def __init__(self):
-#         pass
-
 
 class SearchQuery_Manager:
+    """
+    Saves and retrives search terms made by all users
+    """
     def __init__(self, search_term=None):
         self.search_term = search_term
 
@@ -46,9 +27,9 @@ class SearchQuery_Manager:
         return recent_searches
 
 def get_all_data():
-
-    main_search = None
-    # if search_term == "":
+    """
+    Retrives all current database summary
+    """
     main_search = Product.objects.select_related('price_source').all().order_by("price_value")
     total_categories = main_search.values('category__name').distinct().count()
 
@@ -93,6 +74,9 @@ def get_all_data():
     return summary_data, main_search
 
 def get_summary_data(search_term=""):
+    """
+    Retrives all database summary that relates to the search term provided by the user
+    """
     main_search = None
     if search_term == "":
         main_search = Product.objects.select_related('category', 'price_source').all().order_by("price_value")
@@ -138,10 +122,11 @@ def get_summary_data(search_term=""):
 
 
 class Visitor_Manager:
+    """
+    Saves and Retrives website visitor information
+    """
     def save_visit(self, request):
         get_ip = request.META.get('REMOTE_ADDR', None)
-
-        # Try to update an existing record or create a new one
         visitor, created = Visitors.objects.get_or_create(visitor_ip=get_ip, defaults={'visit_count': 0})
         visitor.visit_count = F('visit_count') + 1
         visitor.save()

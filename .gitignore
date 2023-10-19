@@ -6,3 +6,5 @@ images/*
 passenger_wsgi.py
 db.sqlite3
 *.gz
+__pycache__
+migrations
