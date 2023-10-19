@@ -1,0 +1,406 @@
+{% extends 'product/dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Dashboard {% endblock %}
+{% block header %}
+Dashboard
+{% endblock %}
+{% block content %}
+<style>
+    .row {
+         text-align:center;
+    }
+
+    #content-container { display: block; position: relative; width: 269px; width: 269px; height: 435px; overflow: hidden; display: block;  margin-left: auto; margin-right: auto;  }
+
+
+    #page_frame_1_ek1 {
+        top: 0px;
+        left: 0px;
+        width: 269px;
+        height: 435px;
+    }
+
+    #_bg__frame_1_ek2 {
+        top: 0px;
+        left: 0px;
+        width: 269px;
+        height: 435px;
+        background:rgba(255,255,255,1);
+    }
+
+
+    #rectangle_1 {
+        top: 0px;
+        left: 0px;
+        width: 269px;
+        height: 162px;
+        background:rgba(245.44,169.76,169.76,1);
+    }
+
+
+    #ellipse_1 {
+        top: 112px;
+        left: 85px;
+        width: 118px;
+        height: 118px;
+        -ms-border-radius: 50px / 50px;
+        -o-border-radius: 50px / 50px;
+        -moz-border-radius: 50px / 50px;
+        -webkit-border-radius: 50px / 50px;
+        border-radius: 50px / 50px;
+        border: 9px solid #ffffff;
+        background:rgba(217,217,217,1);
+    }
+    .card {
+        border-radius: 20px;
+        border-color: #222428;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+        padding: 5px;
+    }
+    #id_url_text {
+        font-size: 12px;
+    }
+    .card, #subscribe {
+    border-radius: 20px;
+    border-color: #FFC801;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    padding: 5px;
+    }
+
+
+
+    .table {
+        --bs-table-bg: rgba(0,0,0,0);
+        --bs-table-striped-color: #6C7293;
+        --bs-table-striped-bg: rgba(0,0,0,0.05);
+        --bs-table-active-color: #6C7293;
+        --bs-table-active-bg: rgba(0,0,0,0.1);
+        --bs-table-hover-color: #6C7293;
+        --bs-table-hover-bg: rgba(0,0,0,0.075);
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #6C7293;
+        vertical-align: top;
+        border-color: #000;
+    }
+
+    .image-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-popup img {
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .image-popup a {
+      color: white;
+      font-size: 20px;
+      margin-top: 20px;
+      text-decoration: none;
+      border-bottom: 1px solid white;
+    }
+    .fa-qrcode {
+      border: 1px solid #F5F5F5;
+      padding: 5px;
+      border-color: grey;
+      border-radius: 5px;
+      color: green;
+      font-size: 15px;
+    }
+
+    .dataTable-container {
+      text-align-last: center;
+      text-align: center;
+
+    }
+    .dataTable-input {
+        font-size: 12px !important;
+        
+    }    
+    /* Styles for the image thumbnail in the table cell */
+    .thumbnail {
+        width: 50px; /* Set your desired thumbnail width */
+        height: 50px;
+        cursor: pointer;
+    }
+    /* Small screens (e.g., smartphones) */
+    @media (max-width: 767px) {
+      /* CSS styles for small screens */
+      .search_main {
+            width: 14rem !important;
+      }
+      .hide_loc {
+        display: none;
+      }
+    }
+
+    /* Medium screens (e.g., tablets) */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      /* CSS styles for medium screens */
+      .hide_loc {
+        display: none;
+      }
+      .search_main {
+            width: 75% !important;
+      }
+    }
+
+    /* Large screens (e.g., desktops) */
+    @media (min-width: 1024px) {
+      /* CSS styles for large screens */
+
+    }
+</style>
+<div class="container">
+    <!-- Reports Dashboard -->
+    <div class="row" style="display:block;">
+        <h3 class="mt-4" style="text-align: left; margin-bottom: 10px; color:#8f8d8d">Product Tracker</h3>
+        <br>
+        <div class="col" style="margin-bottom: 10px">
+            <div class="card bg-dark text-white mb-4" style="height:100%">
+                <div class="card-header">
+                    <h5>Type Product Name Here</h5>
+                </div>
+                <div class="card-body" style="text-align:center; ">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="input-group mb-3" style="width:100%">
+                            {{form.search_term}}
+                            <div class="input-group-append">
+                                <button class="btn btn-info text-black btn-md px-4 me-sm-3" type="submit" id="search" name="search" value="Search" style="color:black; background:#FFC801;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" style="display:flex;">
+        <h3 class="mt-4" style="text-align: left; margin-bottom: 10px; color:#8f8d8d">Tracker Info</h3>
+        <br>
+        <div class="row" style="display:contents;">
+            <div class="col">
+                <div class="card bg-dark text-white mb-4">
+                    <div class="card-header">Search History</div>
+                    <div class="card-body" style="display:flex;text-align:center;">
+                        {% if user_searches %}
+                        <div class="col">
+                            <table style="display: inline-table;">
+                                <tbody>
+                                    {% for i in user_searches|slice:"0:5" %}
+                                    <tr>
+                                        <td><a class="btn btn-sm btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a></td>
+                                        {% if i.tracked == True %}
+                                        <td><a class="btn btn-sm btn-outline-success" href="/{{user.id}}/tracked_product/{{i.id}}/remove">UnTrack</a></td>
+                                        {% else %}
+                                        <td><a class="btn btn-sm btn-success" href="/{{user.id}}/tracked_product/{{i.id}}/add"><i class="fa fa-add" aria-hidden="true"></i>Track</a></td>
+                                        {% endif %}
+                                        <td><a class="btn btn-sm btn-danger" href="/{{user.id}}/tracked_product/{{i.id}}/update"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col">
+                            <table style="display: inline-table;">
+                                <tbody>
+                                    {% for i in user_searches|slice:"5:10" %}
+                                    <tr>
+                                        <td><a class="btn btn-sm btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a></td>
+                                        {% if i.tracked == True %}
+                                        <td><a class="btn btn-sm btn-outline-success" href="/{{user.id}}/tracked_product/{{i.id}}/remove">UnTrack</a></td>
+                                        {% else %}
+                                        <td><a class="btn btn-sm btn-success" href="/{{user.id}}/tracked_product/{{i.id}}/add"><i class="fa fa-add" aria-hidden="true"></i>Track</a></td>
+                                        {% endif %}
+                                        <td><a class="btn btn-sm btn-danger" href="/{{user.id}}/tracked_product/{{i.id}}/update"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col">
+                            <table style="display: inline-table;">
+                                <tbody>
+                                    {% for i in user_searches|slice:"10:15" %}
+                                    <tr>
+                                        <td><a class="btn btn-sm btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a></td>
+                                        {% if i.tracked == True %}
+                                        <td><a class="btn btn-sm btn-outline-success" href="/{{user.id}}/tracked_product/{{i.id}}/remove">UnTrack</a></td>
+                                        {% else %}
+                                        <td><a class="btn btn-sm btn-success" href="/{{user.id}}/tracked_product/{{i.id}}/add"><i class="fa fa-add" aria-hidden="true"></i>Track</a></td>
+                                        {% endif %}
+                                        <td><a class="btn btn-sm btn-danger" href="/{{user.id}}/tracked_product/{{i.id}}/update"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p style="text-align:center !important; flex: auto;">You dont have any tracked products. Start searching for some above.</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer align-items-center justify-content-between" style="text-align: center;">
+                        <a class="text-white" href="/my_products">View All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" style="display:flex;">
+        <div class="col" style="vertical-align:center;">
+            <div class="card bg-dark text-white" style="height:auto;">
+                <div class="card-header">
+                    <h5 class="card-title">Quick Summary</h5>
+                </div>
+                {% if results_1 %}
+                <div class="card-body" style="padding:2px!important">
+                    <div class="container px-5 my-5">
+                        <div class="row gx-5">
+                            <div class="col-lg-3 mb-5 mb-lg-0">
+                                <h2 style="text-align:center;">{{results_1|length}} Results Found</h2>
+
+                                <!-- Latest Database Update Date -->
+                                <div class="card bg-dark text-white  mb-3">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Database Last Updated
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.latest_post}}</h5>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- Total Sellers Found -->
+                                <div class="card bg-dark text-white  mb-3">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Total Sellers found
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.sellers}}</h5>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- Price_range -->
+                                <div class="card bg-dark text-white">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Price Ranges
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.price_range}}</h5>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- Total Locations Found -->
+                                <div class="card bg-dark text-white">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Total Locations Found
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.locations}}</h5>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- Total B2Cs Found -->
+                                <div class="card bg-dark text-white">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Total Businesses Found
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.B2Cs}}</h5>
+                                    </div>
+                                </div>
+                                <br />
+                                <!-- Total C2Cs Found -->
+                                <div class="card bg-dark text-white">
+                                    <div class="card-header text-center">
+                                        <i class="fas fa-table me-1"></i>
+                                        Total C2C Found
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5>{{summary_data.C2Cs}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <div class="card" style="background:#222428; color:grey; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 20px; ">
+                                        <div class="card-header">
+                                            <i class="fas fa-table me-1"></i>
+                                            Showing All Results
+                                                                            <p>For a more detailed view go to <a href="/my_products">"My Products"</a> tab.</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <table id="datatablesSimple" class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col" class="hide_loc">Location</th>
+                                                        <th scope="col" style="color:green">Price</th>
+                                                        <th scope="col">Source</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col" class="hide_loc">Location</th>
+                                                        <th scope="col" style="color:green">Price</th>
+                                                        <th scope="col">Source</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    {% for i in results_1 %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td><a class="image-link" href="{{i.thumbnail_url}}" target="_blank"><img src="{{i.thumbnail_url}}" alt="Image" class="thumbnail"></a></td>
+                                                        <td>{{i.name}}</td>
+                                                        <td class="hide_loc">{{i.location}}</td>
+                                                        <td style="color:green">{{i.price_value}}</td>
+                                                        <td><a href="{{i.product_url}}">Contact</a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-body" style="padding:2px!important">
+                    <p>Try searching for a product in the search bar to track or compare prices</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+{% endblock %}

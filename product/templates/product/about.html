@@ -1,0 +1,59 @@
+{% extends "product/base.html" %}
+
+{% load static %}
+
+{% block title %}
+About - WisePenny
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}About{% endblock %}
+{% block content %}
+<style>
+    /* Small screens (e.g., smartphones) */
+    @media (max-width: 375px) {
+      /* CSS styles for small screens */
+      .about_img {
+            height: 12em !important;
+      }
+
+    }
+    
+    /* Medium screens (e.g., tablets) */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      /* CSS styles for medium screens */
+      .about_img {
+        height: 23em !important;
+      }
+    }
+    
+    /* Large screens (e.g., desktops) */
+    @media (min-width: 1024px) {
+      /* CSS styles for large screens */
+    }    
+    
+    
+</style>
+    <!-- Page content-->
+<section class="py-5" style="padding:20px">
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <h1>Welcome to WizePenny</h1>
+            <p>Where savvy shoppers find the best deals!</p>
+            <img class="about_img" alt="WisePenny : Short Links, Trackable, and More!" src="{% static 'wisepenny/discount_1.jpg' %}" style="height: 23em;">
+            <p>At WizePenny, we're dedicated to simplifying the world of online shopping. Our mission is to make comparison shopping easy, enjoyable, and, most importantly, cost-effective. That's why we've created this platform for free price comparison, bringing you the latest deals, offers, and insights for all your shopping needs.</p>
+            <p>We're here to help you discover the most competitive prices, enabling you to make informed buying decisions. Our advanced algorithms and comprehensive database ensure that you find the best deals quickly and efficiently. No more sifting through endless options; we've got your back.</p>
+            <p>But we don't stop at comparing prices. WizePenny offers a wealth of resources to enhance your shopping experience. From product reviews to expert advice, we're your one-stop shop for all things shopping. We believe that an informed shopper is a happy shopper, and we're committed to making you the happiest shopper around!</p>
+            <p>Join us on the journey to smarter shopping and saving money. With WizePenny, you're in control, and your wallet thanks you. Your satisfaction is our priority, and we're always working to improve your shopping experience. Thanks for choosing WizePenny, and happy shopping!</p>
+            <br>
+            <br>
+            <p>WizePenny - Making Your Shopping Wiser</p>
+            <p>A project by:</p>
+            <p>Eskias Yilma</p>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

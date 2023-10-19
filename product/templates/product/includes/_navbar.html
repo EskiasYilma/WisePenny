@@ -1,0 +1,148 @@
+<style>
+     .dropdown-submenu {
+     position: relative;
+    }
+   .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+   }
+   .nav-link {
+    color: #feaa26;
+   };
+
+</style>
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">EY-TOOLS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <!-- QR Code -->
+          <li class="nav-item">
+            <a class="nav-link" href="/qr_home">QR Code</a>
+          </li>
+          <!-- Python Cheat Sheets -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Py_CheatS</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="#">Strftime</a></li>
+              <li><a class="dropdown-item" href="#">Regex</a></li>
+              <li><a class="dropdown-item" href="#">Pandas</a></li>
+              <li><a class="dropdown-item" href="#">Numpy</a></li>
+              <li><a class="dropdown-item" href="#">Beautiful Soup</a></li>
+              <li><a class="dropdown-item" href="#">Requests</a></li>
+            </ul>
+          </li>
+          <!-- Free Tools -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Free-Tools</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="#">Base64 Decoder/Encoder</a></li>
+             <li><a class="dropdown-item" href="/url_shortner">URL Shortner</a></li>
+             <li><a class="dropdown-item" href="#">Crontab</a></li>
+            </ul>
+          </li>
+          <!-- Blog -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blog (Coming Soon)</a>
+          </li>
+          <!-- Contact Me -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Me</a>
+          </li>
+          <!-- About -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        {% else %}
+
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+        </ul>
+
+        {% endif %}
+        <form>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+
+        <ul class="navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{user}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="/admin">Admin</a>
+              </li>
+            {% endif %}
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          {% endif %}
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+<!-- <script>
+  $(document).ready(function(){
+ $('.dropdown-submenu a.test').on("click", function(e){
+ $(this).next('ul').toggle();
+ e.stopPropagation();
+ e.preventDefault();
+ });
+});
+
+</script> -->
+                        <ul class="navbar-nav align-items-lg-center d-none d-lg-flex ml-lg-auto">
+                            {% if user.is_authenticated %}
+                                <li class="nav-item" style="text-align: -webkit-right;"><a class="nav-link" href="/dashboard">
+                                    {{user}}'s Dashboard</a>
+                                </li>
+                                <li class="nav-item dropdown dropdown-animate show" >
+                                    <a class="nav-link" href="#"  data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="avatar rounded-circle">
+                                            <img src="media/avatar.ico" alt="" style="height:30px; width:30px; text-align: right;">
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown06" style="background-color:rgb(33,37,41)!important; color:#9a9c9e !important; border-color: grey;">
+                                      <li><a class="dropdown-item" href="#">My Profile</a></li>
+                                      <li><a class="dropdown-item" href="#">Billing</a></li>
+                                      <li><a class="dropdown-item" href="#">Settings</a></li>
+                                      <li><a class="dropdown-item" href="#">Help</a></li>
+                                      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    </ul>
+                                </li>
+
+                            {% else %}
+                            <li class="nav-item dropdown dropdown-animate show" >
+                                <a class="nav-link" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false" style="text-align: -webkit-right;">
+                                    <span class="avatar rounded-circle">
+                                        <img src="media/avatar.ico" alt="" style="height:10%; width:10%; text-align: right;">
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown06" style="background-color:rgb(33,37,41)!important; color:rgb(154,155,157)!important; border-color: grey;">
+                                  <li><a class="dropdown-item" href="#">My Profile</a></li>
+                                  <li><a class="dropdown-item" href="#">Billing</a></li>
+                                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                                  <li><a class="dropdown-item" href="#">Help</a></li>
+                                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                            {% endif %}
+                        </ul>

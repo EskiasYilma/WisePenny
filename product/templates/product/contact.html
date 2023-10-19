@@ -1,0 +1,60 @@
+{% extends "product/base.html" %}
+{% block head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3652609022161661"
+     crossorigin="anonymous"></script>
+{% endblock %}
+
+{% load static %}
+
+{% block title %}
+Get In Touch! - M-ini.me
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}Get In Touch!{% endblock %}
+{% block content %}
+<style>
+    .form-control {
+        font-size: 12px !important;
+    }
+</style>
+    <!-- Page content-->
+    <section class="py-5">
+        <div class="container px-5">
+        {% if message_name %}
+            <center>
+                <br>
+                <h1>{{message_name|safe}}</h1>
+                <p>We Recieved Your Email and Will Get Back To You Shortly!</p>
+                <br>
+                <a href="/" class="btn btn-lg btn-outline-dark" style="color:#FFC801; background:black"><i class="fa fa-house" style="color:#FFC801; background:black"> </i> Go Back</a>
+            </center>
+
+        {% else %}
+                <!-- Contact form-->
+                <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                    <div class="text-center mb-5">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3" style="background-color:#FFC801 !important; color:black !important;"><i class="bi bi-envelope"></i></div>
+                        <h1 class="fw-bolder">Get in touch</h1>
+                        <p class="lead fw-normal text-muted mb-0">We'd love to hear from you</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                <br>
+                                <center>
+                                <input class="btn btn-primary btn-lg" type="submit" value="Send Message" style="color:black; background:#FFC801">
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        {% endif %}
+            </div>
+    </section>
+
+{% endblock %}

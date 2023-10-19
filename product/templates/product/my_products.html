@@ -1,0 +1,134 @@
+{% extends "product/dashboard_base.html" %}
+<!-- Load Static -->
+{% load static %}
+<!-- Load custom template filters -->
+{% block title %} Manage Tracked Products {% endblock %}
+{% block header %}
+Manage Tracked Products
+{% endblock %}
+{% block content %}
+<style>
+.table {
+    --bs-table-bg: rgba(0, 0, 0, 0);
+    --bs-table-striped-color: #6C7293;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: #6C7293;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: #6C7293;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #6C7293;
+    vertical-align: top;
+    border-color: #000;
+}
+
+.image-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-popup img {
+    border-radius: 10px;
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.image-popup a {
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-bottom: 1px solid white;
+}
+
+.fa-qrcode {
+    border: 1px solid #F5F5F5;
+    padding: 5px;
+    border-color: grey;
+    border-radius: 5px;
+    color: green;
+    font-size: 15px;
+}
+
+.dataTable-container {
+    text-align-last: center;
+}
+.dataTable-input {
+    font-size: 12px !important;
+    
+}
+    .card, #subscribe {
+    border-radius: 20px;
+    border-color: #FFC801;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    padding: 5px;
+    }
+</style>
+<div class="card mb-4" style="background:#222428; color:grey; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 20px; ">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Manage your Tracked Products Here
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Results</th>
+                    <th scope="col">Last Update</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Results</th>
+                    <th scope="col">Last Update</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for i in products %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.date_added}}</td>
+                    <td><a class="btn btn-sm btn-outline-success" href="/{{user.id}}/tracked_product/{{i.id}}/search">{{ i.get_related_products.count }} - Details</a></td>
+                    {% if i.get_last_update %}
+                    <td>{{ i.get_last_update.date_scraped }}</td>
+                    {% else %}
+                    <td>N/A</td>
+                    {% endif %}
+                    {% if i.tracked == True %}
+                    <td>Tracked</td>
+                    <td><a class="btn btn-sm btn-outline-success" href="/{{user.id}}/tracked_product/{{i.id}}/remove">UnTrack</a></td>
+                    {% else %}
+                    <td>UnTracked</td>
+                    <td><a class="btn btn-sm btn-success" href="/{{user.id}}/tracked_product/{{i.id}}/add"><i class="fa fa-add" aria-hidden="true"></i>Track</a></td>
+                    {% endif %}
+                    <td><a class="btn btn-sm btn-danger" href="/{{user.id}}/tracked_product/{{i.id}}/delete"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

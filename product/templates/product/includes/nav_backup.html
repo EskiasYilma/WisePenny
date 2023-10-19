@@ -1,0 +1,133 @@
+<style>
+     .dropdown-submenu {
+     position: relative;
+    }
+   .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+   }
+
+</style>
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">EY-TOOLS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <!-- QR Code -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">QR Code</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="#">URL</a></li>
+              <li><a class="dropdown-item" href="#">Text</a></li>
+              <li><a class="dropdown-item" href="#">Contact V-card</a></li>
+              <li><a class="dropdown-item" href="#">Image/PDF</a></li>
+              <li><a class="dropdown-item" href="#">Logo-QR</a></li>
+              <li><a class="dropdown-item" href="#">Wi-Fi</a></li>
+              <li><a class="dropdown-item" href="#">Phone</a></li>
+              <li><a class="dropdown-item" href="#">SMS</a></li>
+              <li><a class="dropdown-item" href="#">Event</a></li>
+              <li><a class="dropdown-item" href="#">GIF</a></li>
+              <li class ="dropdown-submenu">
+                  <a href="#" class="dropdown-item test droptown-toggle" data-toggle="dropdown">Social Media</a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdown06">
+                    <li><a class="dropdown-item" href="#">Facebook</a></li>
+                    <li><a class="dropdown-item" href="#">Instagram</a></li>
+                    <li><a class="dropdown-item" href="#">YouTube</a></li>
+                    <li><a class="dropdown-item" href="#">Telegram</a></li>
+                    <li><a class="dropdown-item" href="#">Linkedin</a></li>
+                    <li><a class="dropdown-item" href="#">Instagram</a></li>
+                  </ul>
+                 </a>
+              </li>
+
+            </ul>
+          </li>
+          <!-- Python Cheat Sheets -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Py_CheatS</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="#">Strftime</a></li>
+              <li><a class="dropdown-item" href="#">Regex</a></li>
+              <li><a class="dropdown-item" href="#">Pandas</a></li>
+              <li><a class="dropdown-item" href="#">Numpy</a></li>
+              <li><a class="dropdown-item" href="#">Beautiful Soup</a></li>
+              <li><a class="dropdown-item" href="#">Requests</a></li>
+            </ul>
+          </li>
+          <!-- Free Tools -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Free-Tools</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown06">
+              <li><a class="dropdown-item" href="#">Base64 Decoder/Encoder</a></li>
+             <li><a class="dropdown-item" href="/url_shortner">URL Shortner</a></li>
+             <li><a class="dropdown-item" href="#">Crontab</a></li>
+            </ul>
+          </li>
+          <!-- Blog -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blog (Coming Soon)</a>
+          </li>
+          <!-- Contact Me -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Me</a>
+          </li>
+          <!-- About -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        {% else %}
+
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+        </ul>
+
+        {% endif %}
+        <form>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+
+        <ul class="navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{user}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="/admin">Admin</a>
+              </li>
+            {% endif %}
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          {% endif %}
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+<!-- <script>
+  $(document).ready(function(){
+ $('.dropdown-submenu a.test').on("click", function(e){
+ $(this).next('ul').toggle();
+ e.stopPropagation();
+ e.preventDefault();
+ });
+});
+
+</script> -->

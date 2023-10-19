@@ -1,0 +1,732 @@
+{% extends "product/base.html" %}
+{% block head %}
+<!-- Main search bar -->
+{% endblock %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .card, #subscribe {
+    border-radius: 20px;
+    border-color: #FFC801;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    padding: 5px;
+    }
+#searchBar{
+    width:75%;
+}
+.form-control {
+    font-size: 12px !important;
+}
+/* Small screens (e.g., smartphones) */
+@media (max-width: 412px) {
+  /* CSS styles for small screens */
+    #searchBar{
+        width:60% !important;
+    }
+}
+
+/* Medium screens (e.g., tablets) */
+@media (min-width: 413px) and (max-width: 1023px) {
+  /* CSS styles for medium screens */
+    #searchBar{
+        width:60% !important;
+    }
+}
+
+/* Large screens (e.g., desktops) */
+@media (min-width: 1024px) {
+  /* CSS styles for large screens */
+}
+
+
+
+  .table {
+    --bs-table-bg: rgba(0,0,0,0);
+    --bs-table-striped-color: #6C7293;
+    --bs-table-striped-bg: rgba(0,0,0,0.05);
+    --bs-table-active-color: #6C7293;
+    --bs-table-active-bg: rgba(0,0,0,0.1);
+    --bs-table-hover-color: #6C7293;
+    --bs-table-hover-bg: rgba(0,0,0,0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #6C7293;
+    vertical-align: top;
+    border-color: #000;
+}
+
+.image-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-popup img {
+  border-radius: 10px;
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.image-popup a {
+  color: white;
+  font-size: 20px;
+  margin-top: 20px;
+  text-decoration: none;
+  border-bottom: 1px solid white;
+}
+.fa-qrcode {
+  border: 1px solid #F5F5F5;
+  padding: 5px;
+  border-color: grey;
+  border-radius: 5px;
+  color: green;
+  font-size: 15px;
+}
+
+.dataTable-container {
+  text-align-last: center;
+  text-align: center;
+}
+.dataTable-input {
+    font-size: 12px !important;
+    
+}
+/* Styles for the image thumbnail in the table cell */
+.thumbnail {
+    width: 50px; /* Set your desired thumbnail width */
+    height: 50px;
+    cursor: pointer;
+}
+/*Wordcloud*/
+svg text.blink {
+  animation: blink 2s ease-out;
+}
+
+.cd__main {
+  text-align: center;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  position: relative;
+}
+
+#tagi {
+  width: 100%;
+  margin: auto;
+}
+
+@keyframes blink {
+  0% {
+    text-shadow: 0 0 20px rgba(255, 200, 1, 0);
+  }
+  20% {
+    fill: rgba(255, 200, 1, 1);
+    text-shadow: -5px -5px 20px rgba(255, 200, 1, 0.8), 5px -5px 20px rgba(255, 200, 1, 0.8), 5px 5px 20px rgba(255, 200, 1, 0.8), -5px 5px 20px rgba(255, 200, 1, 0.8);
+    ;
+  }
+  30% {
+    fill: rgba(255, 200, 1, 1);
+    -5px -5px 20px rgba(255, 200, 1, 0.8), 5px -5px 20px rgba(255, 200, 1, 0.8), 5px 5px 20px rgba(255, 200, 1, 0.8), -5px 5px 20px rgba(255, 200, 1, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(255, 200, 1, 0);
+  }
+}
+
+.st0 {
+  font-size: 68px;
+}
+
+.st1 {
+  font-size: 27px;
+}
+
+.st2 {
+  font-size: 82px;
+}
+
+.st3 {
+  font-size: 41px;
+}
+
+.st4 {
+  font-size: 41px;
+}
+
+.st5 {
+  fill: #808080;
+}
+
+.st6 {
+  font-size: 24px;
+}
+
+.st7 {
+  font-size: 24px;
+}
+
+.st8 {
+  font-size: 62px;
+}
+
+.st9 {
+  font-size: 86px;
+}
+
+.st10 {
+  font-size: 18px;
+}
+
+.st11 {
+  font-size: 18px;
+}
+
+.st12 {
+  font-size: 25px;
+}
+
+.st13 {
+  font-size: 25px;
+}
+
+.st14 {
+  font-size: 25px;
+}
+
+.st15 {
+  font-size: 32px;
+}
+
+.st16 {
+  font-size: 32px;
+}
+
+.st17 {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  fill: #a0a0a0;
+}
+
+.st18 {
+  font-size: 22px;
+}
+
+.st19 {
+  font-size: 22px;
+}
+
+.st20 {
+  font-size: 36px;
+}
+
+.st21 {
+  font-size: 19px;
+}
+
+.st22 {
+  font-size: 51px;
+}
+
+.st23 {
+  font-size: 26px;
+}
+
+.st24 {
+  font-size: 33px;
+}
+
+.st25 {
+  font-size: 20px;
+}
+
+.st26 {
+  font-size: 23px;
+}
+
+.st27 {
+  font-size: 23px;
+}
+
+.st28 {
+  font-family: 'Open Sans';
+}
+
+.st29 {
+  font-size: 54px;
+}
+
+.st30 {
+  font-size: 20px;
+}
+
+.st31 {
+  font-size: 37px;
+}
+td:empty::before {
+    content: "No Data"
+}
+
+</style>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+                <svg id="tagi" x="0px" y="0px" width="920px" height="324px" viewBox="0 0 920 324">
+                    <text transform="matrix(1 0 0 1 497.4292 293.7129)" class="st17 st0">LENOVO</text>
+                    <text transform="matrix(1 0 0 1 780 191.9316)" class="st17 st20">IOS</text>
+                    <text id="XMLID_2_" transform="matrix(1 0 0 1 410 82.7407)" class="st17 st8">ANDROID</text>
+                    <text transform="matrix(1 0 0 1 188.187 144.3555)" class="st5 st17 st22">HUAWEI</text>
+                    <text transform="matrix(1 0 0 1 399 145.1353)" class="st17 st29">LAPTOPS</text>
+                    <text transform="matrix(1 0 0 1 350 54.6626)" class="st5 st28 st6">SONY</text>
+                    <text transform="matrix(1 0 0 1 247.0718 200)" class="st5 st28 st18">WIRELESS</text>
+                    <text transform="matrix(1 0 0 1 0 129.9268)" class="st5 st28 st30">MICROSOFT</text>
+                    <text transform="matrix(1 0 0 1 250.9712 76.1118)" class="st5 st28 st14">TRACKING</text>
+                    <text transform="matrix(1 0 0 1 251 169.5225)" class="st5 st28 st25">ROUTERS</text>
+                    <text transform="matrix(1 0 0 1 472.4722 100.3691)" class="st5 st28 st27">ELITEBOOK</text>
+                    <text transform="matrix(1 0 0 1 760 163.4639)" class="st5 st28 st1">JOYSTICKS</text>
+                    <text transform="matrix(1 0 0 1 128.9111 264.4697)" class="st5 st28 st26">VIDEO GAMES & ACCESSORIES</text>
+                    <text transform="matrix(1 0 0 1 191.3057 102.2393)" class="st5 st28 st24">SMARTWATCH</text>
+                    <text transform="matrix(1 0 0 1 318.4351 289.0342)" class="st5 st28 st1">RAZORBLADE</text>
+                    <text transform="matrix(1 0 0 1 755 211.4307)" class="st5 st28 st21">PLAYSTATION</text>
+                    <text transform="matrix(1 0 0 1 650 235)" class="st5 st28 st19">COMPUTER HARDWARE</text>
+                    <text transform="matrix(0.9244 0 0 1 632.7485 108)" class="st5 st28 st16">PROJECTORS</text>
+                    <text transform="matrix(1 0 0 1 663.5552 139.2856)" class="st5 st28 st3">PRINTERS</text>
+                    <text transform="matrix(1 0 0 1 280 240.4502)" class="st5 st17 st31">PRICE COMPARISON</text>
+                    <text transform="matrix(1 0 0 1 217.0439 54.2744)" class="st5 st28 st11">HANDHELD</text>
+                    <text transform="matrix(1 0 0 1 119.9526 240.2871)" class="st5 st28 st13">KINGSTON</text>
+                    <text transform="matrix(1 0 0 1 444.0044 34.7744)" class="st5 st17 st4">APPLE</text>
+                    <text transform="matrix(1 0 0 1 125.4019 129.147)" class="st5 st28 st15">HP</text>
+                    <text transform="matrix(1 0 0 1 350.8022 207.5303)" class="st17 st2">SAMSUNG</text>
+                    <text transform="matrix(1 0 0 1 50 215)" class="st17 st9">AMD</text>
+                    <text transform="matrix(1 0 0 1 545.0063 316.7061)" class="st5 st28 st23">BLUETOOTH</text>
+                    <text transform="matrix(1 0 0 1 700 66.7529)" class="st5 st28 st12">SCANNERS</text>
+                    <text transform="matrix(1 0 0 1 185.8467 282.4043)" class="st5 st28 st10">HARD DISKS</text>
+                    <text transform="matrix(1 0 0 1 34.1494 150.5947)" class="st5 st28 st7">TRANSCEND</text>
+                </svg>
+            </div>
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ msg }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h1 class="display-5 fw-bolder text-white mb-2">WisePenny: Where Savings Meet Satisfaction!</h1>
+                    <p class="lead fw-normal text-white-50 mb-4">Welcome to WisePenny, your ultimate destination for hassle-free price comparisons on all Electronics Products available for sale in Ethiopia. We've mastered the art of finding the best deals and bringing them right to your fingertips. Say goodbye to buyer's remorse and hello to smarter shopping choices.</p>
+                    <div class="d-grid gap-3 flex">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3" style="width:100%">
+                                {{form.search_term}}
+                                <div class="input-group-append">
+                                    <button class="btn btn-info text-black btn-md px-4 me-sm-3" type="submit" id="search" name="search" value="Search" style="color:black; background:#FFC801;">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<section class="py-5" id="features" style="background-color:#39404A; color:white">
+    {% if results_1|length > 0 %}
+    <div class="container px-5 my-5">
+        <div class="row gx-5">
+            <div class="col-lg-3 mb-5 mb-lg-0">
+                <h2 style="text-align:center;">{{results_1|length}} Products Found</h2>
+
+                <!-- Latest Database Update Date -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Database Last Updated
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.latest_post}}</h5>
+                    </div>
+                </div>
+                <br />
+                <!-- Total Sellers Found -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Total Sellers found [B2C & C2C]
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.sellers}}</h5>
+                    </div>
+                </div>
+                <br />
+                <!-- Price_range -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Price Ranges
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.price_range}}</h5>
+                    </div>
+                </div>
+                <br />
+
+                {% if user.is_authenticated %}
+                <!-- Total Locations Found -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Total Locations Found
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.locations}}</h5>
+                    </div>
+                </div>
+                <br />                
+                <!-- Total B2Cs Found -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Total Businesses Found
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.B2Cs}}</h5>
+                    </div>
+                </div>
+                <br />
+                <!-- Total C2Cs Found -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Total C2C Found
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>{{summary_data.C2Cs}}</h5>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Login to view more details -->
+                <div class="card" style="background:#212529;color:grey;">
+                    <div class="card-header text-center" style="color:#FFC801">
+                        <i class="fas fa-table me-1"></i>
+                        Login to view more details
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Locations, Businesses, C2C, Price Changes History, ... and More await inside.</h5>
+                    </div>
+                </div>                
+                {% endif %}                
+
+                
+                <br />
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="card" style="background:#212529; color:grey; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 20px; ">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Showing All Results
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="color:#FFC801">#</th>
+                                        <th scope="col"style="color:#FFC801"></th>
+                                        <th scope="col"style="color:#FFC801">Name</th>
+                                        <th scope="col"style="color:#FFC801">Location</th>
+                                        <th scope="col" style="color:#FFC801">Price</th>
+                                        <th scope="col"style="color:#FFC801">Category</th>
+                                        <th scope="col"style="color:#FFC801">Source</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col" style="color:green">Price</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Source</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for i in results_1 %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td><a class="image-link" href="{{i.thumbnail_url}}" target="_blank"><img src="{{i.thumbnail_url}}" alt="Image" class="thumbnail"></a></td>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.location}}</td>
+                                        <td>{{i.price_value}}</td>
+                                        <td>{{i.category.name}}</td>
+                                        <td><a href="{{i.product_url}}">Contact</a></td>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Recent searches section-->
+        {% if user.is_authenticated %}
+        <section class="py-5" id="features" style="background-color:#39404A; color:white; text-align: -webkit-center;">
+            <h3 style="text-align:center;">Your Recent Searches</h3>
+            {% if user_searches %}
+                {% for i in user_searches|slice:"0:15" %}
+                    <a class="btn btn-sm btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a>
+                {% endfor %}
+            {% endif %}
+        </section>
+        {% else %}
+        <section class="py-5" id="features" style="background-color:#39404A; color:white; text-align: -webkit-center;">
+            <h3 style="text-align:center;">Latest Searches</h3>
+            {% if recent_searches %}
+                {% for i in recent_searches|slice:"0:15" %}
+                    <a class="btn btn-sm btn-outline-warning" href="#" disabled>{{i.search_term}}</a>
+                {% endfor %}
+            {% endif %}
+        </section>
+        {% endif %}
+    {% elif results_1|length == 0 and not results_1 == None %}
+    <h3 style="text-align:center;">No results found for {{search_term}}.</h3>
+    <!-- Recent searches section-->
+    {% if user.is_authenticated %}
+    <section class="py-5" id="features" style="background-color:#39404A; color:white; text-align: -webkit-center;">
+        <h3 style="text-align:center;">Your Recent Searches</h3>
+        {% if user_searches %}
+            {% for i in user_searches|slice:"0:15" %}
+                <a class="btn btn-sm btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a>
+            {% endfor %}
+        {% endif %}
+    </section>
+    {% else %}
+    <section class="py-5" id="features" style="background-color:#39404A; color:white; text-align: -webkit-center;">
+        <h3 style="text-align:center;">Latest Searches</h3>
+        {% if recent_searches %}
+            {% for i in recent_searches|slice:"0:15" %}
+                <a class="btn btn-sm btn-outline-warning" href="#" disabled>{{i.search_term}}</a>
+            {% endfor %}
+        {% endif %}
+    </section>
+    {% endif %}
+    {% else %}
+    <div class="container px-5 my-5">
+        <div class="row gx-5">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h2 class="fw-bolder mb-0 text-center">Your Electronics Price Detective, Always on Duty.</h2>
+                <br>
+                <div id="get_started w-100" style="display:flex; flex-flow: column;">
+                    {% if user.is_authenticated %}
+                        <ul class="text-center" style="list-style:none; margin-left: 0 !important;padding-left: 0 !important;">
+                            <li><a href="/dashboard" class="btn btn-lg w-100 btn-outline-primary" style="color:#FFC801; background:black; margin:0">Go to Your Dashboard</a></li>
+                            <br>
+                            <br>
+                            <li><h3 style="text-align:center;">Your Recent Searches</h3></li>
+                            {% if user_searches %}
+                                <li>{% for i in user_searches|slice:"0:15" %}
+                                    <a class="btn btn-sm w-30 btn-outline-warning" href="/{{user.id}}/tracked_product/{{i.id}}/search" disabled>{{i}}</a>
+                                {% endfor %}
+                            {% endif %}</li>
+                        </ul>
+                    {% else %}
+                        <ul class="text-center" style="list-style:none; margin-left: 0 !important;padding-left: 0 !important;">
+                            <li><a href="/register" class="btn btn-lg w-100 btn-outline-primary" style="color:#FFC801; background:black; margin:0">Get Started</a></li>
+                            <br>
+                            <br>
+                            <li><h3 style="text-align:center;">Latest Searches</h3></li>
+                            {% if recent_searches %}
+                                <li>{% for i in recent_searches|slice:"0:25" %}
+                                    <a class="btn btn-sm w-30 btn-outline-warning" href="#" disabled>{{i.search_term}}</a>
+                                {% endfor %}
+                            {% endif %}</li>
+                        </ul>
+
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="row gx-5 row-cols-1 row-cols-md-2">
+                    <div class="col mb-5 h-100 text-center">
+                        <div class="feature bg-dark bg-gradient text-info rounded-3 mb-3"><i class="bi bi-lightbulb" style="color:#FFC801"></i></div>
+                        <h3 class="h5">Smart Electronics Shopping</h3>
+                        <p class="mb-0">Elevate your electronic product shopping experience with real-time price comparisons. Explore the latest tech deals, monitor price trends, and make informed choices. Our platform provides you with insights and data to optimize your savings, all at your fingertips.</p>
+                    </div>
+                    <div class="col mb-5 h-100 text-center">
+                        <div class="feature bg-dark bg-gradient text-info rounded-3 mb-3"><i class="bi bi-gear-wide-connected" style="color:#FFC801"></i></div>
+                        <h3 class="h5">Personalized Electronics Solutions</h3>
+                        <p class="mb-0">Distinguish yourself as a tech-savvy shopper by customizing your electronics shopping experience. Our platform allows you to easily create and modify your shopping profile, including tailored alerts and notifications, giving you the freedom to control how you shop for electronic products.</p>
+                    </div>
+                    <div class="col mb-5 mb-md-0 h-100 text-center">
+                        <div class="feature bg-dark bg-gradient text-info rounded-3 mb-3"><i class="fa fa-search" style="color:#FFC801"></i></div>
+                        <h3 class="h5">Discover Electronic Deals Effortlessly</h3>
+                        <p class="mb-0">Effortlessly find the best electronic product deals with our intuitive platform, perfect for discovering savings, promotions, and more. Get quick and easy access to the information you need to make smart electronic shopping decisions.</p>
+                    </div>
+                    <div class="col h-100 text-center">
+                        <div class="feature bg-dark bg-gradient text-info rounded-3 mb-3"><i class="bi bi-wallet2" style="color:#FFC801"></i></div>
+                        <h3 class="h5">Compare Electronics Prices for Free!</h3>
+                        <p class="mb-0">Why pay for something you can get for free? Our platform offers free price comparison services for electronic products, personalized shopping solutions, and effortless deal discovery, with no hidden fees or charges. Simply create a free account to start saving money on electronics today.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+
+
+<!-- Stats section-->
+<div class="py-5 bg-light">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col">
+                <div class="text-center">
+                    {% if user.is_authenticated %}
+                    <h2 class="fw-bolder">Go to Your Dashboard and Checkout the Latest Prices for your Favourite Electronics Products</h2>
+                    {% else %}
+                    <h2 class="fw-bolder">Create a FREE account and Start Tracking Prices for your Favourite Electronics Products</h2>
+                    {% endif %}
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="row gx-5">
+            <div class="col-md-3 mb-5">
+                <div class="card h-100 bg-dark text-white mb-4">
+                    <div class="card-header text-center">
+                        <br>
+                        <h3><i class="fa fa-users" style="color:#FFC801"></i></h3>
+                        <h3>Sellers</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center">{{all_data.sellers}} + </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-5">
+                <div class="card h-100 bg-dark text-white mb-4">
+                    <div class="card-header text-center">
+                        <br>
+                        <h3><i class="fa fa-map-marker" style="color:#FFC801"></i></h3>
+                        <h3>Locations</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center">{{all_data.locations}} + </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-5">
+                <div class="card h-100 bg-dark text-white mb-4">
+                    <div class="card-header text-center">
+                        <br>
+                        <h3><i class="fa fa-store" style="color:#FFC801"></i></h3>
+                        <h3>Categories</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center">{{all_data.total_categories}} + </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-5">
+                <div class="card h-100 bg-dark text-white mb-4">
+                    <div class="card-header text-center">
+                        <br>
+                        <h3><i class="fa fa-shopping-cart" style="color:#FFC801"></i></h3>
+                        <h3>Products</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center">{{all_data.products}} + </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Call to action-->
+        <aside class="bg-black bg-gradient rounded-3 p-4 p-sm-5 mt-5" id="subscribe">
+            <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
+                <div class="mb-4 mb-xl-0">
+                    <div class="fs-3 fw-bold text-white">New products and Price  notifications delivered to you.</div>
+                    <div class="text-white-50">Sign up for our newsletter for the latest updates.</div>
+                </div>
+                <div class="ms-xl-4">
+                    <div class="input-group mb-2">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                {{sub_form.sub_form}}
+                                <div class="input-group-append">
+                                    <button class="btn btn-info text-black btn-md px-4 me-sm-3" type="submit" id="subscribee" name="subscribee" value="Subscribe" style="color:black; background:#FFC801">Subscribe</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="small text-white-50">We care about privacy, and will never share your data.</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var
+            words = $('#tagi text'),
+            l = words.length,
+            current = null,
+            delay = 2000;
+
+        function clearBlink(o) {
+            var
+                ca = o.getAttribute('class').split(' '),
+                i = ca.indexOf('blink');
+
+            if (i !== -1) {
+                ca.splice(i, 1);
+                o.setAttribute('class', ca.join(' '));
+            }
+        }
+
+        function addBlink(o) {
+            var
+                ca = o.getAttribute('class').split(' ');
+            ca.push('blink');
+            o.setAttribute('class', ca.join(' '));
+        }
+
+        function wordblink() {
+
+            var e;
+
+            if (current !== null) {
+                clearBlink(words.eq(current)[0])
+            }
+
+            current = Math.floor(Math.random() * l);
+            e = words.eq(current);
+            addBlink(e[0]);
+
+            setTimeout(wordblink, delay);
+        }
+
+        wordblink();
+
+    });
+    </script>
+</div>
+{% endblock %}

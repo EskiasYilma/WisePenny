@@ -1,0 +1,38 @@
+{% extends "product/dashboard_base.html" %}
+{% block title %} Edit Profile {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}Edit Profile{% endblock %}
+
+{% block content %}
+
+<style>
+    label {
+        color: grey;
+    }
+    #div_id_password {
+        display: none;
+    }
+  .form-control {
+      font-size: 12px !important;
+  }
+</style>
+<center>
+<div class="col-md-6">
+<div class="form-wrap">
+    <form method="POST" class="form-group" >
+        <!-- Create a Crsf_token here [Required] -->
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br>
+        <button type="submit" class='btn btn-primary' style="color:black; background:cyan">Update Profile</button>
+        <br>
+        <br>
+    </form>
+    <a href="/dashboard" class="btn btn-outline-primary" style="color:green">Return to Dashboard</a>
+    <a href="/change-password" class="btn btn-outline-primary" style="color:green">Change Password</a>
+</div>
+</div>
+</center>
+{% endblock %}
