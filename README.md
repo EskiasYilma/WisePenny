@@ -100,7 +100,7 @@ Install dependencies
   pip3 install -r requirements.txt
 ```
 
-Configure Environment Variables (/HIS_V1/.env)
+Configure Environment Variables (/mini_price/.env)
 
 ```bash
   # Generate a Secret key
