@@ -2,7 +2,7 @@
 # WisePenny: (Health Information System)
 ![Latest commit](https://img.shields.io/github/last-commit/EskiasYilma/WisePenny?style=round-square)
 
-![logo](https://github.com/EskiasYilma/WisePenny/blob/main/product/static/wisepenny/discount_2.png)
+![logo](https://github.com/EskiasYilma/WisePenny/blob/main/product/static/wisepenny/discount_3.jpg)
 
 A light-weight but Robust Django web application designed to facilitate price comparison for a wide range of electronics products available in Ethiopia.
 
@@ -50,10 +50,10 @@ You can test the deployed webapp on https://wisepenny.m-ini.me.
 
 
 ## Screenshots
-![User Dashboard](https://github.com/EskiasYilma/Mini-HIS/assets/113903630/069ebb66-e287-43cb-b2f3-058647ccd18b)
-![HomePage](https://github.com/EskiasYilma/Mini-HIS/assets/113903630/bb8cf2a9-f1d6-4318-8be1-03cdb5fe3bd1)
-![Quick Results](https://github.com/EskiasYilma/Mini-HIS/assets/113903630/f9a8eda8-2413-4b40-ab2c-fd2749dbe634)
-![Detailed Results](https://github.com/EskiasYilma/Mini-HIS/blob/master/screenshots/patient_dash.png)
+![User Dashboard](https://github.com/EskiasYilma/WisePenny/blob/363737667e2ed8b238cd9e95f0c19a6e0fb9f179/screenshots/dashboard.png)
+![HomePage](https://github.com/EskiasYilma/WisePenny/blob/363737667e2ed8b238cd9e95f0c19a6e0fb9f179/screenshots/HomePage.png)
+![Quick Results](https://github.com/EskiasYilma/WisePenny/blob/363737667e2ed8b238cd9e95f0c19a6e0fb9f179/screenshots/dashboard_search_summary.png)
+![Detailed Results](https://github.com/EskiasYilma/WisePenny/blob/363737667e2ed8b238cd9e95f0c19a6e0fb9f179/screenshots/dashboard_detailed_search.png)
 
 
 ## Tech Stack
