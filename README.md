@@ -1,5 +1,5 @@
 
-# WisePenny: (Transforming the Way Ethiopians Shop for Electronics)
+# WisePenny: (Revolutionizing Price Comparison in Ethiopia)
 ![Latest commit](https://img.shields.io/github/last-commit/EskiasYilma/WisePenny?style=round-square)
 
 ![logo](https://github.com/EskiasYilma/WisePenny/blob/main/product/static/wisepenny/discount_3.jpg)
