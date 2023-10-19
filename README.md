@@ -11,7 +11,7 @@ As a Specialization Portfolio Project for ALX Software Engineering Program/Holbe
 This Project endeavors to Empower Ethiopian consumers with the tools to make informed purchasing decisions. In an effort to Streamline the online shopping experience, saving both time and money, this project strives to incorporate Electronics product categories (expanding to all categories in the future), ensuring accurate and relevant comparisons.
 
 ## Video Demo
-https://github.com/EskiasYilma/WisePenny/blob/main/wisepenny_demo.mp4
+https://github.com/EskiasYilma/WisePenny/blob/0a90c2c962df3b995bad769c406bc04be18b23be/wisepenny_demo.mp4
 
 
 My dynamic Django web application, Wisepenny, is on a mission to revolutionize the way consumers in Ethiopia purchase electronics products.
