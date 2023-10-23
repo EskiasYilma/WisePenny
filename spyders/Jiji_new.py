@@ -1,6 +1,4 @@
-
 import requests
-# from bs4 import BeautifulSoup as soup
 import json
 from termcolor import colored
 import time
@@ -15,13 +13,11 @@ from datetime import datetime
 import random
 from pytz import timezone
 import pytz
-# logging
 logging.basicConfig(
-    filename='/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/classifieds.log', level=logging.INFO)
+    filename='classifieds.log', level=logging.INFO)
 
 parser = cfg.ConfigParser()
-parser.read("/home/ex/Documents/searchethio/Jobs/All_jobs/config.cfg")
-# function to add to JSON
+parser.read("hidden/config.cfg")
 
 
 def parse_datetime_jiji(datetime_string):
@@ -34,30 +30,21 @@ def parse_datetime_jiji(datetime_string):
 def write_json(new_data, file_name, cat_name):
     to_import = ["Jobs", "Seeking Work CVs"]
     if cat_name not in to_import:
-        filename = "/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/New_imports/" + file_name
+        filename = "./New_imports/" + file_name
         with open(filename, 'r+') as file:
-            # First we load existing data into a dict.
             file_data = json.load(file)
-            # Join new_data with file_data inside emp_details
             file_data["{}".format(cat_name)].append(new_data[0])
-            # Sets file's current position at offset.
             file.seek(0)
-            # convert back to json.
             json.dump(file_data, file, indent=4)
     else:
-        with open("/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/" + file_name, 'r+') as file:
-            # First we load existing data into a dict.
+        with open("./" + file_name, 'r+') as file:
             file_data = json.load(file)
-            # Join new_data with file_data inside emp_details
             file_data["{}".format(cat_name)].append(new_data[0])
-            # Sets file's current position at offset.
             file.seek(0)
-            # convert back to json.
             json.dump(file_data, file, indent=4)
 
 
 def parse_cats(json_file):
-    # get cat_name, link, count, ttl_pages_per_cat
     cat_data = {}
     for i in range(len(json_file['data'])):
         cont = json_file['data']['categories'][i]
@@ -92,7 +79,7 @@ def parse_regions(json_file):
 
 
 def get_total_items(s):
-    with open('/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/Category_tree.json', 'r') as g:
+    with open('./Category_tree.json', 'r') as g:
         cat_tree = json.load(g)
     total_pages_per_cat = {}
     for i, j in cat_tree.items():
@@ -118,19 +105,17 @@ def get_total_items(s):
 
             r = s.get('https://jiji.com.et/api_web/v1/listing',
                       params=params, headers=headers)
-            # print(r.json())
             data = r.json()
             total_items = data['adverts_list']['count']
             total_pages = data['adverts_list']['total_pages']
             total_pages_per_cat[i] = [total_pages, total_items]
             time.sleep(1)
             break
-    # print(colored(total_pages_per_cat, "red"))
     return total_pages_per_cat
 
 
 def get_recent_items(s):
-    with open('/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/Category_tree.json', 'r') as g:
+    with open('./Category_tree.json', 'r') as g:
         cat_tree = json.load(g)
     total_pages_per_cat = {}
     for i, j in cat_tree.items():
@@ -156,7 +141,6 @@ def get_recent_items(s):
 
             r = s.get('https://jiji.com.et/api_web/v1/listing',
                       params=params, headers=headers)
-            # print(r.json())
             data = r.json()
             total_items = data['adverts_list']['in_day_count']
             if int(total_items) != 0:
@@ -166,20 +150,14 @@ def get_recent_items(s):
             total_pages_per_cat[i] = [total_pages, total_items]
             time.sleep(1)
             break
-    # print(colored(total_pages_per_cat, "red"))
     return total_pages_per_cat
 
 
 def get_listings(s):
-    # ppc = pages_per_category
-    with open('/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/Total_items.json', 'r') as f:
+    with open('./Total_items.json', 'r') as f:
         ppc = json.load(f)
-    with open('/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/Category_tree.json', 'r') as g:
+    with open('./Category_tree.json', 'r') as g:
         cat_tree = json.load(g)
-    # new_ppc = 0
-    # # Get latest listings
-    # if int(ppc[i][0]) > 5:
-
     lst_per_cat = {}
     list_details = []
     all_lst = {}
@@ -236,12 +214,12 @@ def get_listings(s):
             print(colored("Error saving to json 1\n{}".format(str(e)), "red"))
             to_import = ["Jobs", "Seeking Work CVs"]
             if str(i) not in to_import:
-                filename = "/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/New_imports/" + "_{}_Listings.json".format(str(i).replace("&", "").replace(",", "").replace("  ", "_").replace(" ", "_"))
+                filename = "./New_imports/" + "_{}_Listings.json".format(str(i).replace("&", "").replace(",", "").replace("  ", "_").replace(" ", "_"))
                 with open(filename, 'w') as f:
                     json.dump(lst_per_cat, f)
                     print(colored("New Save to json 1 successful!", "green"))
             else:
-                filename = "/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/_{}_Listings.json".format(str(i).replace("&", "").replace(",", "").replace("  ", "_").replace(" ", "_"))
+                filename = "./_{}_Listings.json".format(str(i).replace("&", "").replace(",", "").replace("  ", "_").replace(" ", "_"))
                 with open(filename, 'w') as f:
                     json.dump(lst_per_cat, f)
                     print(colored("New Save to json 1 successful!", "green"))
@@ -251,7 +229,7 @@ def get_listings(s):
         lst_per_cat = {}
 
     # Append all listings into one file for import
-    with open("/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/[ALL] - Listings.json", 'w') as f:
+    with open("./[ALL] - Listings.json", 'w') as f:
         json.dump(all_lst, f)
     return lst_per_cat
 
@@ -283,12 +261,6 @@ def get_details(data, main_cat, s):
             price = {"price": key['price_obj']['value']}
             city = {"city": key['region_text'].split(",")[0].strip()}
             sub_city = {"sub_city": key['region_name']}
-            # if key['attrs']:
-            #     if len(key['attrs']) > 0:
-            #         attrs = {"attrs": [{x['name']:x['value']}
-            #                            for x in key['attrs']]}
-            # else:
-            #     attrs = {"attrs": []}
             attrs_dict = {}
             attrs_array = []
             if key['attrs']:
@@ -321,50 +293,6 @@ def get_details(data, main_cat, s):
             print(
                 colored("***Error crawling Listing - {}\n{}".format(key['id'], str(e)), "red"))
             continue
-
-        # try:
-        #     ind = {"index": index}
-        #     parent_cat = {"main_cat": main_cat}
-        #     id = i['id']
-        #     title = {"title": i['title']}
-        #     cat_name = {"cat_name": i['category_name']}
-        #     price = {"price": i['price_obj']['value']}
-        #     city = {"city": i['region_parent_name']}
-        #     sub_city = {"sub_city": i['region_name']}
-        #     # if i['attrs']:
-        #     #     if len(i['attrs']) > 0:
-        #     #         attrs = {"attrs": [{x['name']:x['value']}
-        #     #                            for x in i['attrs']]}
-        #     # else:
-        #     #     attrs = {"attrs": []}
-        #     attrs = ""
-        #     if i['attrs']:
-        #         if len(i['attrs']) > 0:
-        #             for x in i['attrs']:
-        #                 att = str(x['name']) + ": " + str(x['value']) + "<br>"
-        #                 attrs+= att
-        #     attrs = attrs.strip()
-        #     print(colored(attrs, "red"))
-        #     phone = {"phone": i['user_phone']}
-        #     user_id = {"user_id": i['user_id']}
-        #     status = {"status": i['status']}
-        #     source = {"source": "Jiji"}
-        #     print(colored("{} - {} - {}".format(i['date'], i['date_created'], i['date_moderated']), "cyan"))
-        #     date_added = {"date_added": parse_datetime_jiji(i['date_created'])}
-        #     date_scraped = {"date_scraped": datetime.now(timezone('UTC')).isoformat()}
-        #     print(date_added, date_scraped)
-        #     url = {"url": "https://jiji.com.et" + i['url']}
-        #     if i['images']:
-        #         if len(i['images']) > 0:
-        #             images = {"images": [x['url'] for x in i['images']][0]}
-        #     else:
-        #         images = {"images": []}
-        #     listing_dict[id] = [ind, title, parent_cat, cat_name, price, city,
-        #                         sub_city, attrs, phone, user_id, status, images, url, source, date_scraped]
-        # except Exception as e:
-        #     print(
-        #         colored("***Error crawling Listing - {}\n{}".format(i['id'], str(e)), "red"))
-        #     continue
     return listing_dict
 
 
@@ -388,38 +316,12 @@ def main():
     with requests.Session() as s:
         sess_start = s.get(start_api, headers=headers)
         print(sess_start.status_code)
-        # print(sess_start.)
         if sess_start.status_code == 200:
-            # json_response = sess_start.json()
-            # # parse cat tree
-            # print(colored("Parsing Cats ... ", "yellow"))
-            # cat_tree = parse_cats(json_response)
-            # # store cat tree
-            # with open("Category_tree.json", 'w') as f:
-            #     json.dump(cat_tree, f)
-            # print(colored("Cats Parsed and Saved.", "green"))
-
-            # # # parse location tree FOR LATER
-            # print(colored("Parsing Loc ... ", "yellow"))
-            # loc_tree = parse_regions(json_response)
-            # # store loc tree
-            # with open("Location_tree.json", 'w') as f:
-            #     json.dump(loc_tree, f)
-            # print(colored("Loc Parsed and Saved.", "green"))
-            # # Get total items and total_pages for category links
-            # print(colored("Parsing Items per Page ... ", "yellow"))
-            # ttl_pages_per_cat = get_total_items(s)
-            # # save total_pages per cat
-            # with open("Total_items.json", 'w') as f:
-            #     json.dump(ttl_pages_per_cat, f)
-            # print(colored("Items per Page Parsed and Saved.", "green"))
             new_pages_per_cat = get_recent_items(s)
-            # save total_pages per cat
-            with open("/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/Total_items.json", 'w') as f:
+            with open("./Total_items.json", 'w') as f:
                 json.dump(new_pages_per_cat, f)
             print(colored("New Items per Page Parsed and Saved.", "green"))
 
-            # get details
             print(colored("Getting Details ... ", "yellow"))
             try:
                 get_listings(s)
@@ -434,8 +336,8 @@ def main():
 
 
 def update_files():
-    new_import_dir = "/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/New_imports/"
-    new_files = os.listdir("/home/ex/Documents/GITLAB/ghost_modules/ghost_prices/test/mini_price/spyders/New_imports")
+    new_import_dir = "./New_imports/"
+    new_files = os.listdir("./New_imports")
     available_updates = []
     for i in new_files:
         with open(new_import_dir + i, 'r') as f:
@@ -485,152 +387,11 @@ def test_ftp(origin_dir, available_updates):
     logging.info("File Transfer Complete! - " + str(datetime.now()))
 
 
-def process_import(id):
-    cookies = {
-        'wordpress_test_cookie': 'WP%20Cookie%20check',
-    }
-
-    headers_login = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:110.0) Gecko/20100101 Firefox/110.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        # 'Accept-Encoding': 'gzip, deflate, br',
-        'Referer': 'https://searchethio.com/wp-login.php?redirect_to=https%3A%2F%2Fsearchethio.com%2Fwp-admin%2F&reauth=1',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Origin': 'https://searchethio.com',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        # 'Cookie': 'wordpress_test_cookie=WP%20Cookie%20check',
-        'Upgrade-Insecure-Requests': '1',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-User': '?1',
-        # Requests doesn't support trailers
-        # 'TE': 'trailers',
-    }
-
-    dataa = 'log=ex&pwd=IjnfDBm%40FHllW%23*4YApPgPgz&wp-submit=Log+In&redirect_to=https%3A%2F%2Fsearchethio.com%2Fwp-admin%2F&testcookie=1'
-    # dataa = {'log': 'ex', 'pwd': '8w6F TNrt bdPz IQpI m2F3 jelr'}
-    wp_login = 'https://searchethio.com/wp-login.php'
-    wp_admin = 'https://searchethio.com/wp-admin/'
-
-    with requests.Session() as s:
-        resp = s.post(wp_login, headers=headers_login, data=dataa, cookies=cookies)
-        # print(resp.text)
-        cookies = resp.cookies
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:110.0) Gecko/20100101 Firefox/110.0',
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://searchethio.com/wp-admin/admin.php?page=pmxi-admin-manage&id=14&action=update',
-            'X-Requested-With': 'XMLHttpRequest',
-            'DNT': '1',
-            'Connection': 'keep-alive',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin',
-        }
-
-        trigger_url = "https://searchethio.com/wp-load.php?import_key=WF_3hU_&import_id={}&action=trigger".format(str(id))
-        trigger = s.get(trigger_url, headers=headers)
-
-        if trigger.status_code == 200:
-            print("{} - Import trigger successful".format(str(id)))
-        else:
-            logging.info("{} - Import trigger failed with status code: ".format(str(id)), trigger.status_code)
-        for j in range(20):
-            while True:
-                processing_url = "https://searchethio.com/wp-load.php?import_key=WF_3hU_&import_id={}&action=processing".format(str(id))
-
-                process = s.get(processing_url, headers=headers)
-                print(datetime.now())
-                print(process)
-                print("#" * 20)
-                if process.status_code == 200:
-                    print("[Import] {} [Run] {} - Processing in progress ...".format(id,j))
-                    break
-                else:
-                    time.sleep(2)
-        logging.info("Processing Complete!")
-        s.close()
-
-
-def failsafe():
-    cookies = {
-        'wordpress_test_cookie': 'WP%20Cookie%20check',
-    }
-
-    headers_login = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:110.0) Gecko/20100101 Firefox/110.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        # 'Accept-Encoding': 'gzip, deflate, br',
-        'Referer': 'https://searchethio.com/wp-login.php?redirect_to=https%3A%2F%2Fsearchethio.com%2Fwp-admin%2F&reauth=1',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Origin': 'https://searchethio.com',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        # 'Cookie': 'wordpress_test_cookie=WP%20Cookie%20check',
-        'Upgrade-Insecure-Requests': '1',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-User': '?1',
-        # Requests doesn't support trailers
-        # 'TE': 'trailers',
-    }
-
-    dataa = 'log=ex&pwd=IjnfDBm%40FHllW%23*4YApPgPgz&wp-submit=Log+In&redirect_to=https%3A%2F%2Fsearchethio.com%2Fwp-admin%2F&testcookie=1'
-    wp_login = 'https://searchethio.com/wp-login.php'
-    wp_admin = 'https://searchethio.com/wp-admin/'
-
-    with requests.Session() as s:
-        resp = s.post(wp_login, headers=headers_login, data=dataa)
-        cookies = resp.cookies
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:110.0) Gecko/20100101 Firefox/110.0',
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://searchethio.com/wp-admin/admin.php?page=pmxi-admin-manage&id=14&action=update',
-            'X-Requested-With': 'XMLHttpRequest',
-            'DNT': '1',
-            'Connection': 'keep-alive',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin',
-        }
-        for j in range(20):
-            while True:
-                processing_url = "https://searchethio.com/wp-load.php?import_key=WF_3hU_&import_id={}&action=processing".format(str(id))
-
-                process = s.get(processing_url)
-                print(datetime.now())
-                print(process)
-                print("#" * 20)
-                if process.status_code == 200:
-                    print("[Import] {} [Run] {} - Processing in progress ...".format(id,j))
-                    break
-                else:
-                    time.sleep(2)
-        logging.info("Processing Complete!")
-        s.close()
-
 
 try:
     logging.info("{}\n[Automation Started] [{}]".format(str("#"*50), str(datetime.now())))
     main()
     update_files()
-    # import_ids_processed = []
-    # # import_ids = [27]
-    # import_ids = [24, 29, 30, 31, 27, 26, 25, 23]
-    # random.shuffle(import_ids)
-    # for i in import_ids:
-    #     if i not in import_ids_processed:
-    #         process_import(str(i))
-    #         import_ids_processed.append(i)
-    #         logging.info("[Processed] {}".format(str(i)))
     logging.info("{}\n[Automation Ended] [{}]".format(str("#"*50), str(datetime.now())))
 except Exception as e:
     logging.info(str(e))
